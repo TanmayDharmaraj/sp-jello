@@ -49,7 +49,7 @@ gulp.task('spsave',['js'],  () => {
 })
 
 var customOpts = {
-  entries: ['./src/SiteAssets/jello-cycle.js'],
+  entries: ['./src/SiteAssets/jello-rxjs.js'],
   debug: true
 };
 var opts = assign({}, watchify.args, customOpts);

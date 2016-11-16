@@ -9,43 +9,42 @@ var Jello = function(options) {
         var select = function(select) {
             return Rx.Observable.of("$select=" + select);
         }
-        var make = function (args) {
-          return Rx.Observable.forkJoin(args)
+        var make = function(args) {
+            return Rx.Observable.forkJoin(args)
         }
         return {where, select, make}
     }()
     var ListItems = function() {
         var get = function(filterOb) {
-          var promise = null;
-          if (filterOb) {
-            filterOb.subscribe({
-                next: function(filterValues) {
-                  promise = $.ajax({
-                      url: "https://rapidcircle1com.sharepoint.com/sites/streamdev/_api/web/lists/getbytitle('Customers')/items?" + filterValues.join("&"),
-                      type: 'GET',
-                      headers: {
-                          "accept": "application/json;odata=verbose"
-                      }
-                  }).promise();
-                },
-                error: function(er) {
-                    console.error(er);
-                },
-                complete: function() {
-                    console.log("Filters compelte");
-                }
-            });
-          }
-          else{
-            promise = $.ajax({
-                url: "https://rapidcircle1com.sharepoint.com/sites/streamdev/_api/web/lists/getbytitle('Customers')/items",
-                type: 'GET',
-                headers: {
-                    "accept": "application/json;odata=verbose"
-                }
-            }).promise();
-          }
-          return Rx.Observable.fromPromise(promise)
+            var promise = null;
+            if (filterOb) {
+                filterOb.subscribe({
+                    next: function(filterValues) {
+                        promise = $.ajax({
+                            url: "https://rapidcircle1com.sharepoint.com/sites/streamdev/_api/web/lists/getbytitle('Customers')/items?" + filterValues.join("&"),
+                            type: 'GET',
+                            headers: {
+                                "accept": "application/json;odata=verbose"
+                            }
+                        }).promise();
+                    },
+                    error: function(er) {
+                        console.error(er);
+                    },
+                    complete: function() {
+                        //done
+                    }
+                });
+            } else {
+                promise = $.ajax({
+                    url: "https://rapidcircle1com.sharepoint.com/sites/streamdev/_api/web/lists/getbytitle('Customers')/items",
+                    type: 'GET',
+                    headers: {
+                        "accept": "application/json;odata=verbose"
+                    }
+                }).promise();
+            }
+            return Rx.Observable.fromPromise(promise)
         }
         return {get}
     }();
@@ -54,8 +53,7 @@ var Jello = function(options) {
 
 //To kick things off.
 var filter = Jello.Filter.make([Jello.Filter.where("Id eq 8"), Jello.Filter.select("Title")])
-var j = Jello.ListItems.get(filter);
-j.subscribe({
+Jello.ListItems.get(filter).subscribe({
     next: function(x) {
         console.log(x)
     },
@@ -63,6 +61,6 @@ j.subscribe({
         console.error(e)
     },
     complete: function() {
-        console.log("complete")
+        //done
     }
 });

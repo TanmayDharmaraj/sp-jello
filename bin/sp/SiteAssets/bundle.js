@@ -17760,7 +17760,7 @@ var Jello = function (options) {
                         console.error(er);
                     },
                     complete: function complete() {
-                        console.log("Filters compelte");
+                        //done
                     }
                 });
             } else {
@@ -17778,9 +17778,10 @@ var Jello = function (options) {
     }();
     return { ListItems: ListItems, Filter: Filter };
 }();
+
+//To kick things off.
 var filter = Jello.Filter.make([Jello.Filter.where("Id eq 8"), Jello.Filter.select("Title")]);
-var j = Jello.ListItems.get(filter);
-j.subscribe({
+Jello.ListItems.get(filter).subscribe({
     next: function next(x) {
         console.log(x);
     },
@@ -17788,7 +17789,7 @@ j.subscribe({
         console.error(e);
     },
     complete: function complete() {
-        console.log("complete");
+        //done
     }
 });
 
