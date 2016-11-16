@@ -47,7 +47,8 @@
     "@cycle/rxjs-run": "^3.0.3",
     "jquery": "^3.1.1",
     "lodash": "^4.16.4",
-    "rxjs": "^5.0.0-rc.1",
+    "rxjs": "^5.0.0-rc.3",
+    "rxjs-es": "^5.0.0-beta.12",
     "xstream": "^6.4.1"
   }
 }
